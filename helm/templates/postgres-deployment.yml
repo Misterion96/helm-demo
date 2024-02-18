@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.postgres.name}}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      components: {{ .Values.postgres.component}}
+
+  template:
+    metadata:
+      labels:
+        components: {{ .Values.postgres.component}}
+
+    spec:
+      containers:
+      - name: {{ .Values.postgres.name}}
+        image: "{{ .Values.postgres.image}}:{{ .Values.postgres.version}}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.postgres.port}}
+        env:
+          {{- range .Values.postgres.envs }}
+          {{- $data := dict "name" $.Values.postgres.name "env" . }}
+          {{- include "env.template" $data | indent 10}}
+          {{- end}}
+        resources:
+          limits:
+            memory: "600Mi"
+            cpu: "400m"
+        volumeMounts: 
+          - name: {{ .Values.postgres.name}}-data
+            mountPath: /var/lib/postgresql/data
+            subPath: {{ .Values.postgres.name}}
+      volumes: 
+        - name: {{ .Values.postgres.name}}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.postgres.name}}-pvc

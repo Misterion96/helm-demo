@@ -1,0 +1,31 @@
+app:
+  component: frontend
+  name: short-app
+  port: 80
+  image: misterion96/demo-app
+  version: latest
+
+api:
+  component: backend
+  name: short-api
+  port: 3000
+  image: misterion96/demo-api
+  version: latest
+  envs:
+    - DATABASE_URL
+
+postgres:
+  component: db
+  name: postgres
+  port: 5432
+  image: postgres
+  version: 12.18-bullseye
+  envs:
+    - POSTGRES_DB
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+
+database:
+  user: demo
+  password: demo
+  db: demo

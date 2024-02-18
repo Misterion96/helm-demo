@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.api.name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      components: {{ .Values.api.component }}
+
+  template:
+    metadata:
+      labels:
+        components: {{ .Values.api.component }}
+
+    spec:
+      containers:
+      - name: {{ .Values.api.name }}
+        image: "{{ .Values.api.image }}:{{ .Values.api.version }}"
+        imagePullPolicy: Always
+        env:
+          {{- range .Values.api.envs }}
+          {{- $data := dict "name" $.Values.api.name "env" . }}
+          {{- include "env.template" $data | indent 10}}
+          {{- end}}
+        ports:
+        - containerPort: {{ .Values.api.port }}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+#        livenessProbe:
+#          exec:
+#            command:
+#              - curl
+#              - --fail
+#              - http://localhost:3000/api
+#          initialDelaySeconds: 30
+#          periodSeconds: 5
+#          failureThreshold: 2
+#        startupProbe:
+#          exec:
+#            command:
+#              - curl
+#              - --fail
+#              - http://localhost:3000/api
+#          periodSeconds: 10
+#          failureThreshold: 10
+#        readinessProbe:
+#          exec:
+#            command:
+#              - curl
+#              - --fail
+#              - http://localhost:3000/api
+#          periodSeconds: 5
+#          failureThreshold: 5

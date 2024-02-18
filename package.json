@@ -1,7 +1,0 @@
-{
-    "name": "demo-repo-kube",
-    "scripts": {
-        "docker:build": "docker build -t misterion96/my-image:latest .",
-        "docker:push": "docker push misterion96/my-image:latest"
-    }
-}

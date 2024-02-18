@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  my-helm-repo-maksim-dolgikh:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-02-24T19:22:16.834328+04:00"
+    description: A Helm chart for Kubernetes
+    digest: 09e8372fc3b7a75a5277b406a7aea547cac8ea921c211e8b582d76e2e65e7a28
+    name: my-helm-repo-maksim-dolgikh
+    type: application
+    urls:
+    - my-helm-repo-maksim-dolgikh-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-02-24T19:22:16.833284+04:00"

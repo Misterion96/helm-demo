@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      components: {{ .Values.app.component }}
+
+  template:
+    metadata:
+      labels:
+        components: {{ .Values.app.component }}
+
+    spec:
+      containers:
+      - name: {{ .Values.app.name }}
+        image: "{{ .Values.app.image }}:{{ .Values.app.version }}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.app.port }}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
