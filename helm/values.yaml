@@ -1,13 +1,13 @@
 app:
   component: frontend
-  name: short-app
+  name: demo-app
   port: 80
   image: misterion96/demo-app
   version: latest
 
 api:
   component: backend
-  name: short-api
+  name: demo-api
   port: 3000
   image: misterion96/demo-api
   version: latest
